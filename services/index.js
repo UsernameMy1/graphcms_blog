@@ -201,7 +201,7 @@ export const getCategoryPost = async (slug) => {
             slug
             title
             excerpt
-            featuredImage {
+            postImage {
               url
             }
             categories {
