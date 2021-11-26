@@ -78,9 +78,16 @@ export const getRecentPosts = async () => {
     query GetPostDetails() {
       posts(
         orderBy: createdAt_ASC
-        last: 3
+        last: 10
       ) {
         title
+        author {
+          photo {
+            url
+          }
+        name
+        }
+        excerpt
         postImage {
           url
         }
