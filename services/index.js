@@ -78,7 +78,7 @@ export const getRecentPosts = async () => {
     query GetPostDetails() {
       posts(
         orderBy: createdAt_ASC
-        last: 10
+        last: 10 
       ) {
         title
         author {
@@ -226,3 +226,58 @@ export const getCategoryPost = async (slug) => {
 
     return result.postsConnection.edges;
 };
+
+export const getAllPostsText = async () => {
+    const query = gql`
+            query getPostsText {
+              posts {
+                slug
+                content {
+                  text
+                }
+                title
+                slug
+                author {
+                  name
+                }
+                postImage {
+                  url
+                }
+                createdAt
+              }
+            }
+    `
+
+    const result = await request(graphqlAPI, query);
+
+    return result.posts;
+}
+
+export const getPostsWithComments = async () => {
+    const query = gql`
+        query getPostsWithComments {
+          posts (where: {comments_every: {}}){
+            comments {
+                comment
+            }
+            author {
+                name
+                photo {
+                    url
+                }
+            }
+            title
+            excerpt
+            slug
+            createdAt
+            postImage {
+              url
+            }
+          }
+        }
+    `
+
+    const result = await request(graphqlAPI, query);
+
+    return result.posts;
+}

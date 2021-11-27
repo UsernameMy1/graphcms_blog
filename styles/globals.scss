@@ -44,6 +44,7 @@ body {
 }
 
 .react-multi-carousel-list {
+  position: relative;
   & .arrow-btn{
     transition: width 300ms ease;
     width: 50px;
@@ -61,4 +62,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.right-arrow{
+  right: 0;
 }

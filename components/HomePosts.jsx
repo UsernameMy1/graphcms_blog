@@ -1,16 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import moment from "moment";
 import Link from 'next/link'
-import {getRecentPosts, getSimilarPosts} from "../services";
+import {getPostsWithComments, getRecentPosts, getSimilarPosts} from "../services";
 
-const HomePosts = ({categories, slug}) => {
+const HomePosts = ({categories, slug, userSort, posts}) => {
     const [relatedPosts, setRelatedPosts] = useState([])
     useEffect(() => {
 
-        getRecentPosts()
-            .then((result) => setRelatedPosts(result))
+        if(userSort === 'new-post-sort') {
+            getRecentPosts()
+                .then((result) => setRelatedPosts(result.reverse()))
+        } else if(userSort === 'post-with-comments') {
+            getPostsWithComments()
+                .then((result) => setRelatedPosts(result.reverse()))
+        }
 
-    }, [slug])
+    }, [slug, userSort])
 
 
     return (
@@ -43,6 +48,7 @@ const HomePosts = ({categories, slug}) => {
                     <span>
                                 {moment(post.createdAt).format('MMM DD, YYYY')}
                             </span>
+
                 </div>
             </div>
             <p className='text-center text-lg text-gray-700 font-normal px-4 lg:px-20 mb-8'>{post.excerpt}</p>
